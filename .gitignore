@@ -1,0 +1,17 @@
+*.aux
+*.log
+*.bbl
+*.bcf
+*.blg
+*.lof
+*.run.xml
+*.toc
+*.out
+*.lot
+
+*.gz
+
+*.pdf
+!title.pdf
+!title_improved.pdf
+!declaration.pdf

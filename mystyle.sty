@@ -1,0 +1,68 @@
+\ProvidesPackage{mystyle}[2016/11/17 v1.0 My own style]
+
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{amsmath}
+\usepackage{upgreek}
+
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage[backend=biber,sorting=none]{biblatex}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{nameref}
+\usepackage{tikz}
+\usepackage{epstopdf}
+\usepackage{siunitx}
+\usepackage{gensymb}
+\usepackage{booktabs}
+\usepackage{arydshln}
+\usepackage{bytefield}
+
+% ścieżka do grafiki
+\graphicspath{ {images/} }
+
+% plik z bibliografią
+\addbibresource{bsc.bib}
+
+% białe znaki
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+
+% cudzysłowy takie same w polskim i chorwackim, a csquotes nie ma polskich
+\DeclareQuoteAlias{croatian}{polish}
+
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0pt}
+
+% ustawienia listingu (kawalków kodu)
+\lstset{
+    basicstyle=\ttfamily\small,
+    captionpos=b,
+    aboveskip=2em,
+    belowskip=2em,
+    abovecaptionskip=1em
+}
+
+\usepackage[font=footnotesize]{caption}
+
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+
+\usepackage{fontspec}
+\setmonofont{UbuntuMono-R.ttf}
+\usepackage{setspace}
+
+\newcommand{\myitem}[1]{\item\textit{#1}}
+
+\usepackage{caption}
+\captionsetup{justification=raggedright,
+singlelinecheck=false
+}
+
+\sisetup{detect-all, output-decimal-marker = {,}}
