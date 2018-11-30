@@ -29,6 +29,8 @@
 
 \usepackage{indentfirst}
 \usepackage[affil-it]{authblk}
+\usepackage{smartdiagram}
+\usepackage{metalogo}
 
 \begin{document}
     \setstretch{1.15}
@@ -37,26 +39,76 @@
 
 \author{Joanna Czechura, Tomasz Kowalczyk, Marcin Waszak}
 \title{Bezprzewodowe sieci sensorów – systemy wbudowane czasu rzeczywistego}
-\date{\today}
+\date{29 listopada 2018}
 \affil{Wydział Elektroniki i Technik Informacyjnych, Politechnika Warszawska}
 
 
 \maketitle
-    
-    %\include{chapters/introduction}
 
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+Celem referatu jest opisanie aktualnego stanu wiedzy na temat bezprzewodowych sieci sensorów w oparciu o systemy wbudowane czasu rzeczywistego. Referat zawiera opis nowoczesnych rozwiązań opierających się na technice bezprzewodowych sieci sensorowych, w języku angielskim Wireless Sensor Network (w dalszej części nazywanej skrótem WSN). 
 \end{abstract}
-\section{First bit}
-If you want to ramp your text straight onto the title page, start the text at 
-something that does not cause a page break, like a section.  Here's a handy 
-place to introduce some of your woofy conventions, like quotes in equations.
-\subsection{New Page}
-A new chapter starts a new page. \cite{przepior}
 
-    %\pagenumbering{gobble}
-    %\setcounter{page}{2}
-    \printbibliography
+\section{Wstęp}
+Sieci sensorów od początków obarczone były potrzebą prowadzenia przewodów sygnałowych. W miarę powiększania się ilości sensorów, zwiększania się fizycznych odległości pomiędzy sensorami i powiększania się problemów wynikających z zakłóceń natury elektrycznej komunikacja z czujnikami stawała się coraz bardziej utrudniona, co wymagało opracowywania coraz nowszych protokołów komunikacyjnych. 
+
+Bezprzewodowe sieci czujników są zbudowane z węzłów, które zawierają mikrokontrolery, czujniki oraz elementy nazywane w języku angielskim transceiverami - czyli połączenie odbiorników i nadajników\cite{c4}. Cała ta struktura wymaga odpowiedniego sposobu komunikacji - w tym celu stworzono wiele innowacyjnych sposobów pozwalających na   przesyłanie informacji między elementami sieci w czasie rzeczywistym, takich jak na przykład komunikacja bezprzewodowa, będąca tematem niniejszego referatu. Pojawienie się protokołów komunikacji bezprzewodowej otworzyło nowe możliwości w komunikacji rozproszonej sieci czujników. Brak przewodów komunikacyjnych pozwala na:
+\begin{itemize}
+\item uniknięcie zakłóceń sygnałów w przewodach,
+\item uproszczenie fizycznej realizacji sieci czujników,
+\item separacja galwaniczna elementów sieci,
+\item umożliwienie prostego dołączania i odłączania elementów sieci,
+\item umożliwienie tworzenia czujników zasilanych bateryjnie,
+\item możliwość podłączenia czujników do obiektów mobilnych\cite{c1}, warto wspomnieć, iż typowo sieci czujników są sieciami typu jeden master - wiele urządzeń slave - oznacza to, iż jedno urządzenie (z reguły komputer) kontroluje dużą ilość urządzeń podrzędnych, tj. czujników i urządzeń pomiarowych).
+\end{itemize}
+
+Bezprzewodowe sieci sensorów składają się z modułów zbudowanych z trzech elementów: nadajnik/odbiornik protokołu bezprzewodowego, mikrokontroler oraz sensor/sensory.\cite{c4}. 
+
+\subsection{Zastosowania bezprzewodowych sieci sensorów}
+Bezprzewodowe sieci sensorów znajdują zastosowanie w wielu aplikacjach. Zostały one zobrazowane na rysunku \ref{fig:example_struct}. W zależności od aplikacji stosowane są różne rozwiązania - zarówno pod względem protokołów komunikacyjnych i topologii sieci. Do zastosowań typu inteligentny budynek, w których zagęszczenie sensorów jest duże możliwe jest wykorzystanie protokołów komunikacyjnych o małym zasięgu (np. Wi-Fi)\cite{c3}. W innych aplikacjach z kolei inna cecha może być kluczowa (np. zasięg - sieci oparte o GSM)\cite{c10}.
+
+\begin{center}
+\begin{figure}[H]
+
+\smartdiagramset{
+  distance planet-text=0.1cm,
+  planet text width=5cm,
+  distance planet-satellite=6cm,
+  planet size=4cm,
+  satellite size=3cm,
+  satellite text width=3cm,
+  /tikz/connection planet satellite/.append style={<->}
+}
+\smartdiagram[constellation diagram]{Aplikacje WSN,
+  Śledzenie pojazdów, Inteligentne budynki, Opieka zdrowotna, Rolnictwo, Monitoring środowiska, Śledzenie tropów zwierząt, Bezpieczeństwo}
+\caption{Struktura przykładowej sieci sensorowej\cite{c4}}
+\label{fig:example_struct}
+\end{figure}
+\end{center}
+
+\subsection{Protokoły komunikacji oraz technologie wykorzystywane w WSN}
+Do komunikacji modułów między sobą oraz z komputerem centralnym wykorzystywane jest kilka różnych rozwiązań:
+\begin{itemize}
+\item \textbf{Wi-Fi}  - zestaw standardów opartych na IEEE 802.11. Olbrzymią zaletą Wi-Fi w zastosowaniu WSN jest możliwość wykorzystania istniejących routerów wykorzystywanych nominalnie do bezprzewodowego połączenia telefonów, tabletów oraz laptopów z Internetem. Poza tą cechą Wi-Fi jest korzystne w sieciach wewnątrz budynków - gdzie nieduży zasięg oraz relatywnie duży pobór mocy nie jest przeszkodą. Dużą zaletą jest dostępność coraz tańszych transceiverów oraz mikrokontrolerów ze zintegrowanym front-endem WiFi (np. ESP8266), co umożliwia tworzenie sieci złożonych z wielu węzłów w rozsądnym koszcie.\cite{c2}\cite{c14}\cite{c15}
+\item \textbf{ZigBee} - protokół oparty na IEEE 802.15.4, stosowany w sieciach typu Mesh oraz Cluster Tree. Cechuje się małym poborem mocy oraz pewną, lecz powolną komunikacją między elementami.\cite{c6}\cite{c12}
+\item \textbf{Bluetooth} - technologia pierwotnie nie była tworzona pod kątem sieci, tylko połączeń point-to-point, lecz okazała się przydatna ze względu na niski koszt transceiverów, spory zasięg (do 100m), mały pobór mocy, silne standaryzowanie protokołu i możliwość tworzenia sieci Ad Hoc, wykorzystanie technik frequency-hopping - czyli mechanizm unikania interferencji z innymi protokołami pracującymi na częstotliwości 2,4GHz, w połączeniu z przyzwoitą przepustowością umożliwiają wykorzystanie Bluetooth w sieciach sensorów. Wadą Bluetooth jest długi czas nawiązywania połączenia między dwoma urządzeniami (rzędu średnio pięciu sekund), zatem protokół ten nie nadaje się do sieci o dużej dynamice zmian i częstych przerwaniach połączeń.\cite{c7}\cite{c9}
+\item \textbf{GSM} - standard GSM znajduje zastosowanie w sieciach, które są rozproszone na dużym obszarze i nie muszą komunikować się zbyt często. Przykładową aplikacją sieci opartej o GSM są sieci monitorujące warunki atmosferyczne\cite{c10}.
+\item \textbf{RFID} - szczególny rodzaj wykorzystania fal radiowych, bardzo prostu w implementacji i pomocny w przypadku identyfikacji poszczególnych obiektów, na przykład pojemników z odpadami przy sieci badającej przestrzeganie zasad odpowiedniej gospodarki odpadami komunalnymi lub  w przypadku informowania klienta poprzez informację na telefonie lub we wcześniej pobranej aplikacji o nowych promocjach właśnie mijanego na ulicy sklepu z odzieżą.
+\item \textbf{UWB} - można wykorzystać technologię Ultra-Wideband w obu jej wersjach - Orthogonal Frequency Division Multiplexing (OFDM) oraz Impulse Radio (IR). Jej główną zaletą jest bardzo duża niewrażliwość na zakłócenia wynikające z innych urządzeń komunikujących się poprzez inne protokoły. Jest też całkowicie nieszkodliwa dla człowieka, przez co znajduje zastosowanie w urządzeniach Wireless Body Area Network (WBAN).\cite{c11}
+\item \textbf{WiMAX} - technika oparta o standard IEEE 802.16. Jej zaletami są duży zasięg (do 50km pomiędzy nadajnikiem a odbiornikami) oraz wielka przepustowość (teoretyczne maksimum to 175Mb/s w promieniu do 10km od nadajnika). Potencjalnym zastosowaniem jest  sieć czujników na przestrzeni miasta.\cite{c12}
+\item \textbf{ISA100.11a} - standard sieci Mesh. Pozwala na budowę bardzo rozbudowanych sieci.\cite{c13}
+\item \textbf{WirelessHART} - technologia oparta o protokół HART i przenosząca go w świat komunikacji bezprzewodowej. Podobnie jak ISA100.11a opiera się na sieci Mesh. Cechuje się zdolnością do samoorganizacji i odporności na stracone węzły.\cite{c13}
+\end{itemize}
+
+\section{Przykłady wykorzystywanych obecnie sieci sensorowych}
+Poniżej wyszczególniono przykłady bezprzewodowych sieci sensorowych, które działają w czasie rzeczywistym i mają zastosowanie w dzisiejszych czasach - zostały one wymienione w literaturze jako obrazujące możliwości nowoczesnych rozwiązań:
+\begin{itemize}
+\item Badanie zanieczyszczeń powietrza: różnorodne reakcje chemiczne dotyczące naszego powietrza mogą tworzyć trujące gazy, między innymi ozon, który wpływa na zdrowie ludzi, zwierząt oraz może uszkodzić rośliny. Tak więc wczesne wykrywanie powyższych zanieczyszczeń może być z pewnością powierzone nowoczesnej bezprzewodowej sieci czujnikowej. Taka sieć pozwala monitorować szkodliwe pierwiastki zanieczyszczające\cite{c4}. System porównuje otrzymane dane z danymi wzorcowymi i  na podstawie otrzymanego wyniku generuje odpowiedni komunikat - obrazujący poziom zanieczyszczeń w danym obszarze.
+\item Innym ważnym zastosowaniem WSN jest monitorowanie jakość wody. Różne parametry jakości wody, takie jak pH, zawartość amoniaku, rozpuszczony tlen itp mogą być kontrolowane za pomocą bezprzewodowej sieci sensorowej. W cytowanej literaturze opisano trz metocy minotorowania jakości wód\cite{c4}, jednym z nich jest CDMA - monitorowanie uwzględniające głównie skupiska ryb i ich dobro.
+\item Inteligentny transport - jest to kolejne zastosowanie WSN. Kamerki internetowe i liczne czujniki są używane do monitorowania przepływu ruchu pojazdów, zapobiegając wykroczeniem drogowym, łamaniu przepisów i nielegalnym działaniom w pobliżu infrastruktury krytycznej takiej jak lotniska, stacje kolejowe itp.
+\item Inteligentny budynek - bezprzewodowe sieci czujników oparte o sieć Wi-Fi znajdują szerokie zastosowanie w nowoczesnych budynkach, które dzięki analizowaniu ruchu i obecności ludzi mogą pomóc w oszczędzaniu energii poprzez dostosowywanie oświetlenia oraz klimatyzacji w konkretnych pomieszczeniach. Wykorzystują one istniejącą w budynku sieć bezprzewodową oraz sieć energetyczną bez konieczności instalowania przewodów sygnałowych.\cite{c3}
+\end{itemize}
+
+\printbibliography
 
 \end{document}
